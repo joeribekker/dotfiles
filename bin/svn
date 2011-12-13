@@ -1,0 +1,32 @@
+#!/bin/bash
+SVN_BINARY=/usr/bin/svn
+
+if [ "$1" == 'info' ]; then
+    $SVN_BINARY $@
+else
+    HISTORY_FILE=.svn-history
+    TODAY=`date +"%F %T"`
+
+    echo "[$TODAY] $0 $@" >> $HISTORY_FILE
+
+    function svn_log {
+        echo "# Additional information: $0 $1" >> $HISTORY_FILE
+        $SVN_BINARY $1 >> $HISTORY_FILE
+    }
+
+    case "$1" in
+        update|up)
+            svn_log info
+            ;;
+        revert)
+            svn_log stat
+            svn_log diff
+            ;;
+        switch|sw)
+            svn_log info
+            ;;
+    esac
+    echo "# Command output: $0 $@" >> $HISTORY_FILE
+    $SVN_BINARY $@ | tee -a $HISTORY_FILE
+fi
+
