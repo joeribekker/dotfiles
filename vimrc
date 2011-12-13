@@ -20,6 +20,9 @@ set expandtab "turn tabs into whitespace
 set shiftwidth=4 "indent width for autoindent
 filetype indent on "indent depends on filetype
 
+"Better delete key function
+set backspace=indent,eol,start
+
 "Turn on incremental search with ignore case (except explicit caps)
 set incsearch
 set smartcase
@@ -56,6 +59,7 @@ nmap <leader>l :set list!<CR>
 "set listchars=tab:▸\ ,eol:¬
 
 " Allow to use mouse to point and click at help tags
-if v:version >= 702
-    set mouse=a
-endif
+"if v:version >= 702
+"    set mouse=a
+"endif
+
