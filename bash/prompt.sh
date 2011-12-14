@@ -1,23 +1,20 @@
 # Based on Mitshuhiko's dotfiles: https://github.com/mitsuhiko/dotfiles
+#
+# Load color theme.
+source ~/.dotfiles/bash/themes/monokai.sh
+COLOR_RESET="[00m"
 
-PROMPT_DEFAULT_COLOR="[00m"
-PROMPT_GRAY_COLOR="[37m"
-PROMPT_PINK_COLOR="[35m"
-PROMPT_GREEN_COLOR="[32m"
-PROMPT_ORANGE_COLOR="[33m"
-PROMPT_RED_COLOR="[31m"
-PROMPT_ALERT_COLOR="[31;40m"
 if [ `id -u` == '0' ]; then
-    PROMPT_USER_COLOR=$PROMPT_ALERT_COLOR
+    PROMPT_USER_COLOR=$PROMPT_USER_ROOT_COLOR
 else
-    PROMPT_USER_COLOR=$PROMPT_PINK_COLOR
+    PROMPT_USER_COLOR=$PROMPT_USER_DEFAULT_COLOR
 fi
 # Check if we are connect to a remote server and change color of 
 # machine name
 if [ -n "${SSH_CLIENT}" ]; then
-    PROMPT_HOST_COLOR=$PROMPT_RED_COLOR
+    PROMPT_HOST_COLOR=$PROMPT_HOST_REMOTE_COLOR
 else
-    PROMPT_HOST_COLOR=$PROMPT_ORANGE_COLOR
+    PROMPT_HOST_COLOR=$PROMPT_HOST_LOCAL_COLOR
 fi
 
 PROMPT_VCPROMPT_EXECUTABLE=~/.dotfiles/bin/vcprompt
@@ -46,12 +43,12 @@ prompt_virtualenv() {
 }
 
 export PROMPT_BASEPROMPT='\n\e${PROMPT_USER_COLOR}\u\
-\e${PROMPT_GRAY_COLOR} at \e${PROMPT_HOST_COLOR}\h \
-\e${PROMPT_GRAY_COLOR}in \e${PROMPT_GREEN_COLOR}\w\
+\e${PROMPT_DEFAULT_COLOR} at \e${PROMPT_HOST_COLOR}\h \
+\e${PROMPT_DEFAULT_COLOR}in \e${PROMPT_PATH_COLOR}\w\
 `prompt_lastcommandfailed`\
-\e${PROMPT_GRAY_COLOR}`prompt_vcprompt`\
+\e${PROMPT_DEFAULT_COLOR}`prompt_vcprompt`\
 `prompt_virtualenv`\
-\e${PROMPT_DEFAULT_COLOR}'
+\e${COLOR_RESET}'
 export PS1="${PROMPT_BASEPROMPT}
 $ "
 
